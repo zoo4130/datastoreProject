@@ -2,6 +2,7 @@ package com.gcp.crud;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,9 +13,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gcp.crud.CRUDService;
+import com.gcp.crud.DatastoreService;
 
 /**
  * Handles requests for the application home page.
@@ -24,6 +26,9 @@ public class HomeController {
 	
 	@Autowired
 	private CRUDService crudService;
+	
+	@Autowired
+	private DatastoreService datatoreService;
 	
 	/**
 	 * home.jsp VIEW
@@ -40,16 +45,19 @@ public class HomeController {
 	}
 	
 	/**
-	 * java Select
+	 * java Select ($.ajax @RequestBody)
 	 */ 
-	@RequestMapping(value = "/select", method = RequestMethod.POST)
-	public void javaSelect(HttpServletRequest request, HttpServletResponse response) throws Exception{
+	@ResponseBody 
+	@RequestMapping(value = "/select",produces="application/json", method = RequestMethod.POST)
+	public List<Map<String, Object>> javaSelect(@RequestBody  Map<String,Object> map) throws Exception{
 		
 		System.out.println("===============================");
 		System.out.println("Java CRUD Select");
 		
-		Map<String,Object> param = null;
 		//crudService.select(param);
+		List<Map<String, Object>> result = datatoreService.select();
+		
+		return result;
 	}
 	
 	/**
@@ -66,6 +74,7 @@ public class HomeController {
 		param.put("name", "김철수");
 		param.put("age", "15");
 		
+		datatoreService.insert();
 		//crudService.insert(param);
 		
 		//재조회
@@ -85,6 +94,7 @@ public class HomeController {
 		param.put("no", "002");
 		param.put("age", "100");
 		
+		datatoreService.update();
 		//crudService.update(param);
 		
 		//재조회
@@ -103,6 +113,7 @@ public class HomeController {
 		Map<String,Object> param = new HashMap<String,Object>();
 		param.put("no", "004");
 		
+		datatoreService.delete();
 		//crudService.delete(param);
 		
 		//재조회

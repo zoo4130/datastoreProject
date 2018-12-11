@@ -10,26 +10,24 @@ $(function(){
 	
 	//반영
 	function SCH(){
-		var data2=[{"ORD_NO":1,"CLASS_CD":"1","CLASS_NM":"1","CLASS_TYPE_CD":"1"}];
+		var param={"ORD_NO":1,"CLASS_CD":"1","CLASS_NM":"1","CLASS_TYPE_CD":"1"};
 		
 		$('#crudTable > tbody:last').empty(); //계속추가되지 않도록 초기화하고 조회
 		
 		$.ajax({
-			type: "post",
-			async:false,
 			url:"/select",
-			dataType:'text',
+			type:"POST",
+			dataType:'json',
 			contentType : "application/json; charset=UTF-8",
 			data: JSON.stringify(null),
 			success: function(data){ 
-				
-				
-				for(var i=0;i<data2.length;i++){
+				console.log(data);
+				for(var i=0;i<data.length;i++){
 						$('#crudTable > tbody:last').append('<tr><td style="height:27px; text-align:center;">'
-								+data2[i].ORD_NO+'</td><td style="height:27px; text-align:left;">'
-								+data2[i].CLASS_CD+'</td><td style="height:27px; text-align:left;">'
-								+data2[i].CLASS_NM+'</td><td style="height:27px; text-align:left;">'
-								+data2[i].CLASS_TYPE_CD+'</td></tr>');
+								+data[i].ORD_NO+'</td><td style="height:27px; text-align:left;">'
+								+data[i].CLASS_CD+'</td><td style="height:27px; text-align:left;">'
+								+data[i].CLASS_NM+'</td><td style="height:27px; text-align:left;">'
+								+data[i].CLASS_TYPE_CD+'</td></tr>');
 					
 				}
 			},
@@ -54,6 +52,7 @@ $(function(){
 			data: JSON.stringify(null),
 			success: function(data){ 
 				alert("추가완료");
+				SCH();
 			},
 			error: function (xhr, ajaxOptions, thrownError) { 
 				alert(xhr.status+' Error');
@@ -70,6 +69,7 @@ $(function(){
 			data: JSON.stringify(null),
 			success: function(data){ 
 				alert("수정완료");
+				SCH();
 			},
 			error: function (xhr, ajaxOptions, thrownError) { 
 				alert(xhr.status+' Error');
@@ -86,6 +86,7 @@ $(function(){
 			data: JSON.stringify(null),
 			success: function(data){ 
 				alert("삭제완료");
+				SCH();
 			},
 			error: function (xhr, ajaxOptions, thrownError) { 
 				alert(xhr.status+' Error');
@@ -125,10 +126,10 @@ $(function(){
 			<col width="20%"><col width="30%"><col width="30%"><col width="20%">
 		</colgroup> 
 		<tr>
-			<th><label style="padding-top:5px; height: 29px; font-size: 13px;">순번</label></th>
-			<th><label style="padding-top:5px; height: 29px; font-size: 13px;">공법코드</label></th>
-			<th><label style="padding-top:5px; height: 29px; font-size: 13px;">공법명</label></th>
-			<th><label style="padding-top:5px; height: 29px; font-size: 13px;">구분</label></th>
+			<th bgcolor="#B2EBF4"><label style="padding-top:5px; height: 29px; font-size: 20px;">순번</label></th>
+			<th bgcolor="#B2EBF4"><label style="padding-top:5px; height: 29px; font-size: 20px;">공법코드</label></th>
+			<th bgcolor="#B2EBF4"><label style="padding-top:5px; height: 29px; font-size: 20px;">공법명</label></th>
+			<th bgcolor="#B2EBF4"><label style="padding-top:5px; height: 29px; font-size: 20px;">구분</label></th>
 		</tr>
 		<tbody></tbody>
 	</table>
